@@ -3,9 +3,11 @@ import pandas as pd
 import time
 import choices
 
+#Conexão com o banco de dados
 conexao = sqlite3.connect('almeida_db_project.db')
 cursor = conexao.cursor()
-   
+
+# Hud de escolhas
 while 1==1:
     print('-=-'*20)
     print('Welcome to Almeida_DB System!')
@@ -29,6 +31,7 @@ while 1==1:
             time.sleep(1)
             break
         
+        # Escolha nº 1
         elif order == 1:
             choices.initial_choice1()
             time.sleep(1)

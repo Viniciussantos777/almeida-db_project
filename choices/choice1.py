@@ -3,11 +3,32 @@ import time
 
 
 
-def pesquisa_cidade(escolha_1):
+def pesquisa_cidade_all_years(escolha_1,escolha_2):
     conexao = sqlite3.connect('almeida_db_project.db')
     cursor = conexao.cursor()
     
-    busca = list(cursor.execute(f'''SELECT info_consum FROM info WHERE id_city = {escolha_1}'''))
+    query = '''
+    SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
+    FROM info
+    INNER JOIN year ON info.pk_id_year = year.pk_id_year
+    INNER JOIN energy_font ON info.pk_id_en_fo = energy_font.pk_id_en_fo
+    INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
+    INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
+    WHERE info.id_city = ? AND info.pk_id_en_fo = ?
+'''
+    busca = cursor.execute(query, (escolha_1,escolha_2)).fetchall()
+    
+    print('-'* 75)
+    print(f"\n{'YEAR':<10} | {'CONSUM':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
+    print("-" * 75)
+
+    for ano, consumo, fonte, industria, clima in busca:
+        print(f"{int(ano):<10} | {int(consumo):<10} | {str(fonte):<15} | {str(industria):<20} | {str(clima):<15}")
+        
+    if not busca:
+        print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
+    time.sleep(2)
+    input("\nTAP 'enter' to continue:")
     
     
     
@@ -15,9 +36,32 @@ def pesquisa_cidade(escolha_1):
 
 
 
-def pesquisa_cidade_ano(escolha_city,escolha_year):
-    pass
+def pesquisa_cidade_one_year(escolha_city,escolha_year):
+    conexao = sqlite3.connect('almeida_db_project.db')
+    cursor = conexao.cursor()
 
+    query = '''
+    SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
+    FROM info
+    INNER JOIN year ON info.pk_id_year = year.pk_id_year
+    INNER JOIN energy_font ON info.pk_id_en_fo = energy_font.pk_id_en_fo
+    INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
+    INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
+    WHERE info.id_city = ? AND info.pk_id_year = ?
+'''
+    busca = cursor.execute(query, (escolha_city,escolha_year)).fetchall()
+    
+    print('-'* 75)
+    print(f"\n{'YEAR':<10} | {'CONSUM':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
+    print("-" * 75)
+
+    for ano, consumo, fonte, industria, clima in busca:
+        print(f"{int(ano):<10} | {int(consumo):<10} | {str(fonte):<15} | {str(industria):<20} | {str(clima):<15}")
+        
+    if not busca:
+        print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
+    time.sleep(2)
+    input("\nTAP 'enter' to continue:")
 
 
 
@@ -48,21 +92,38 @@ def initial_choice1():
                 
                 #Escolha cidade
                 cursor.execute('''SELECT id_city, city_name FROM nome_city''')
-                dados = cursor.fetchall()
+                dados_cidade = cursor.fetchall()
                 
-                opcoes = {id_city: city_name for id_city, city_name in dados}
+                opcoes_cidade = {id_city: city_name for id_city, city_name in dados_cidade}
                 
                 print('='*20)
                 print('Escolha uma das seguintes cidades:')
-                for id_city, nome in opcoes.items():
+                for id_city, nome in opcoes_cidade.items():
                     print(f"{id_city} - {nome}")
     
 
-                #Escolha_1 é a escolha da 1º opção que só precisa da cidade.
+                #Escolha_1 é a escolha da 1º opção que só precisa da cidade e fonte de energia
                 escolha_1 = int(input('Escolha um dos números: '))
                 
-                pesquisa_cidade(escolha_1)
+                # Escolha de fonte de energia
+                cursor.execute('''SELECT pk_id_en_fo, name_energy FROM energy_font''')
+                dados_energia = cursor.fetchall()
+                
+                opcoes_energia = {pk_id_en_fo: name_energy for pk_id_en_fo, name_energy in dados_energia}
+                
+                print('='*20)
+                print('Escolha uma das seguintes fontes de energia: ')
+                for pk_id_en_fo, nome in opcoes_energia.items():
+                    print(f"{pk_id_en_fo} - {nome}")
+                
+                #Escolha_2 é a escolha da 1º opção que só precisa da cidade e fonte de energia
+                escolha_2 = int(input('Escolha um dos números: '))
+                
+                pesquisa_cidade_all_years(escolha_1,escolha_2)
                 time.sleep(2)
+                
+                
+                
                 
                 
             #Escolher info por 1 cidade para 1 ano específico:    
@@ -95,7 +156,7 @@ def initial_choice1():
                 escolha_year = int(input('Escolha um dos anos(Numeros): '))
                 
                 #Função puxada
-                pesquisa_cidade_ano(escolha_city,escolha_year)
+                pesquisa_cidade_one_year(escolha_city,escolha_year)
                 time.sleep(2)
         
         
