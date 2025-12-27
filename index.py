@@ -6,7 +6,6 @@ import choices
 conexao = sqlite3.connect('almeida_db_project.db')
 cursor = conexao.cursor()
    
-
 while 1==1:
     print('-=-'*20)
     print('Welcome to Almeida_DB System!')

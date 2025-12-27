@@ -7,9 +7,10 @@ def pesquisa_cidade(escolha_1):
     conexao = sqlite3.connect('almeida_db_project.db')
     cursor = conexao.cursor()
     
-    cidades = list(cursor.execute(
-        f'''SELECT city_name FROM nome_city'''
-    ))
+    busca = list(cursor.execute(f'''SELECT info_consum FROM info WHERE id_city = {escolha_1}'''))
+    
+    
+    
 
 
 
