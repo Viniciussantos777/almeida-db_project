@@ -3,6 +3,7 @@ import time
 
 
 
+# Pesquisa todos os anos que tenham a cidade e a fonte energética escolhida:
 def pesquisa_cidade_all_years(escolha_1,escolha_2):
     conexao = sqlite3.connect('almeida_db_project.db')
     cursor = conexao.cursor()
@@ -15,11 +16,12 @@ def pesquisa_cidade_all_years(escolha_1,escolha_2):
     INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
     INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
     WHERE info.id_city = ? AND info.pk_id_en_fo = ?
+    ORDER BY year.year_name ASC
 '''
     busca = cursor.execute(query, (escolha_1,escolha_2)).fetchall()
     
     print('-'* 75)
-    print(f"\n{'YEAR':<10} | {'CONSUM':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
+    print(f"\n{'YEAR':<10} | {'CONSUM(MWh)':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
     print("-" * 75)
 
     for ano, consumo, fonte, industria, clima in busca:
@@ -48,11 +50,12 @@ def pesquisa_cidade_one_year(escolha_city,escolha_year):
     INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
     INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
     WHERE info.id_city = ? AND info.pk_id_year = ?
+    ORDER BY info.info_consum ASC
 '''
     busca = cursor.execute(query, (escolha_city,escolha_year)).fetchall()
     
     print('-'* 75)
-    print(f"\n{'YEAR':<10} | {'CONSUM':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
+    print(f"\n{'YEAR':<10} | {'CONSUM (MWh)':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
     print("-" * 75)
 
     for ano, consumo, fonte, industria, clima in busca:

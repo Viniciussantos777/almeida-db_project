@@ -1,24 +1,20 @@
-import sqlite3
-import pandas as pd
 import time
 import choices
-
-#Conexão com o banco de dados
-conexao = sqlite3.connect('almeida_db_project.db')
-cursor = conexao.cursor()
 
 # Hud de escolhas
 while 1==1:
     print('-=-'*20)
-    print('Welcome to Almeida_DB System!')
-    print('Choose your necessity:')
-    print('[1] Consumption by energy type')
-    print('[2] -')
-    print('[3] -')
-    print('[4] -')
-    print('[5] -')
-    print('[6] -')
-    print('[7] EXIT')
+    print('''
+    Welcome to Almeida_DB System!
+    Choose your necessity:
+    [1] Cities' consumption by energy type
+    [2] Charts comparing cities
+    [3] -
+    [4] -
+    [5] -
+    [6] -
+    [7] EXIT'''
+    )
     print('-=-'*20)
     
     try:
@@ -33,8 +29,14 @@ while 1==1:
         
         # Escolha nº 1
         elif order == 1:
-            choices.initial_choice1()
             time.sleep(1)
+            choices.initial_choice1()
+            
+            
+        elif order == 2:
+            time.sleep(1)
+            choices.initial_choice2()
+            
     
     except ValueError:
         print('Coloque um número válido!')
