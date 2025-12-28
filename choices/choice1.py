@@ -75,7 +75,7 @@ def initial_choice1():
     cursor = conexao.cursor()
     
     #Opções de escolha:
-    while 1==1:
+    while True:
         print('='*20)
         print('Choose the type of search:')
         print('[1] Per City (All years)')
@@ -107,6 +107,9 @@ def initial_choice1():
 
                 #Escolha_1 é a escolha da 1º opção que só precisa da cidade e fonte de energia
                 escolha_1 = int(input('Escolha um dos números: '))
+                if escolha_1 not in opcoes_cidade:
+                    print("Cidade inválida!")
+                    continue
                 
                 # Escolha de fonte de energia
                 cursor.execute('''SELECT pk_id_en_fo, name_energy FROM energy_font''')
@@ -121,6 +124,9 @@ def initial_choice1():
                 
                 #Escolha_2 é a escolha da 1º opção que só precisa da cidade e fonte de energia
                 escolha_2 = int(input('Escolha um dos números: '))
+                if escolha_2 not in opcoes_energia:
+                    print("Cidade inválida!")
+                    continue
                 
                 pesquisa_cidade_all_years(escolha_1,escolha_2)
                 time.sleep(2)

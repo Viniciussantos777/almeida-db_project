@@ -2,7 +2,7 @@ import time
 import choices
 
 # Hud de escolhas
-while 1==1:
+while True:
     print('-=-'*20)
     print('''
     Welcome to Almeida_DB System!
