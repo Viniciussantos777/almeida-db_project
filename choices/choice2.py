@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from choices.connect_db import connect
-conexao, cursor = connect()
+from data.connect_db import connect_db
+conexao, cursor = connect_db()
 
 #Gráfico consumo x anos / fonte energética
 def pesquisa_cidade_grafico_maximos(escolha_city, escolha_energy):

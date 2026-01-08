@@ -53,11 +53,13 @@ def initial_choice1():
                 cidades = listar_cidades()
                 for cid, nome in cidades:
                     print(f"{cid} - {nome}")
+                print("=-"*20)
                 city_id = int(input('Choose city: '))
 
                 anos = listar_anos()
                 for aid, ano in anos:
                     print(f"{aid} - {ano}")
+                print("=-"*20)
                 year_id = int(input('Choose year: '))
 
                 dados = consumo_por_cidade_one_year(city_id, year_id)

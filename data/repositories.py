@@ -1,5 +1,3 @@
-# data/repositories.py
-
 def get_cities(conn):
     query = "SELECT id_city, city_name FROM nome_city"
     return conn.execute(query).fetchall()
