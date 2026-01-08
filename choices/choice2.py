@@ -1,13 +1,11 @@
 import sqlite3
 import time
 import matplotlib.pyplot as plt
-
-
+from choices.connect_db import connect
+conexao, cursor = connect()
 
 #Gráfico consumo x anos / fonte energética
 def pesquisa_cidade_grafico_maximos(escolha_city, escolha_energy):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
 
     # Usamos MAX(info.info_consum) e GROUP BY year.year_name
     # Isso garante que o SQL retorne apenas UMA linha por ano, com o maior valor encontrado
@@ -61,8 +59,6 @@ def pesquisa_cidade_grafico_maximos(escolha_city, escolha_energy):
 
 # Pesquisa e gráficos com o mínimo e energia
 def pesquisa_cidade_grafico_minimos(escolha_city, escolha_energy):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
 
     # Trocamos MAX por MIN para pegar o menor valor de cada ano agrupado
     query = '''
@@ -112,8 +108,6 @@ def pesquisa_cidade_grafico_minimos(escolha_city, escolha_energy):
     
     
 def grafico_fontes_maximo(escolha_city, escolha_year):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
 
     # Selecionamos o nome da fonte e o maior valor de consumo (MAX)
     # Agrupamos por fonte para evitar a sobreposição de múltiplos registros
@@ -166,8 +160,6 @@ def grafico_fontes_maximo(escolha_city, escolha_year):
 
 
 def grafico_fontes_minimo(escolha_city, escolha_year):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
 
     # Selecionamos o MIN(info_consum) para pegar o menor registro de cada fonte
     # O GROUP BY garante que não haja sobreposição (uma barra por fonte)
@@ -222,8 +214,6 @@ def grafico_fontes_minimo(escolha_city, escolha_year):
 
 
 def initial_choice2():
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
     
     #Opções de escolha:
     while True:

@@ -1,12 +1,10 @@
 import sqlite3
 import time
-
-
+from choices.connect_db import connect
+conexao, cursor = connect()
 
 # Pesquisa todos os anos que tenham a cidade e a fonte energética escolhida:
 def pesquisa_cidade_all_years(escolha_1,escolha_2):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
     
     query = '''
     SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
@@ -39,8 +37,6 @@ def pesquisa_cidade_all_years(escolha_1,escolha_2):
 
 
 def pesquisa_cidade_one_year(escolha_city,escolha_year):
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
 
     query = '''
     SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
@@ -71,8 +67,6 @@ def pesquisa_cidade_one_year(escolha_city,escolha_year):
 
 #Primeira visão dessa escolha:
 def initial_choice1():
-    conexao = sqlite3.connect('almeida_db_project.db')
-    cursor = conexao.cursor()
     
     #Opções de escolha:
     while True:
