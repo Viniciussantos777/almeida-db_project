@@ -1,4 +1,3 @@
-import time
 from choices.connect_db import connect
 conexao, cursor = connect()
 
@@ -26,7 +25,6 @@ def pesquisa_cidade_all_years(escolha_1,escolha_2):
         
     if not busca:
         print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
-    time.sleep(2)
     input("\nTAP 'enter' to continue:")
     
     
@@ -58,7 +56,6 @@ def pesquisa_cidade_one_year(escolha_city,escolha_year):
         
     if not busca:
         print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
-    time.sleep(2)
     input("\nTAP 'enter' to continue:")
 
 
@@ -80,7 +77,6 @@ def initial_choice1():
             #Saída
             if order == 3:
                 print('Back to menu...')
-                time.sleep(1)
                 break
             
             #Escolher info por 1 cidade para todos os anos:
@@ -122,7 +118,6 @@ def initial_choice1():
                     continue
                 
                 pesquisa_cidade_all_years(escolha_1,escolha_2)
-                time.sleep(2)
                 
                 
                 
@@ -159,13 +154,11 @@ def initial_choice1():
                 
                 #Função puxada
                 pesquisa_cidade_one_year(escolha_city,escolha_year)
-                time.sleep(2)
         
         
         #Tratamento de erros:
         except ValueError:
             print('Coloque um número válido!')
-            time.sleep(1)
             continue
 
 

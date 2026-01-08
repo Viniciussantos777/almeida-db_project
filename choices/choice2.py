@@ -1,4 +1,3 @@
-import time
 import matplotlib.pyplot as plt
 from choices.connect_db import connect
 conexao, cursor = connect()
@@ -22,7 +21,6 @@ def pesquisa_cidade_grafico_maximos(escolha_city, escolha_energy):
 
     if not busca:
         print("\n[!] NO DATA FOUND FOR THIS SELECTION.")
-        time.sleep(2)
         return
 
     anos_x = []
@@ -74,7 +72,6 @@ def pesquisa_cidade_grafico_minimos(escolha_city, escolha_energy):
 
     if not busca:
         print("\n[!] NO DATA FOUND FOR THIS SELECTION.")
-        time.sleep(2)
         return
 
     anos_x = []
@@ -123,7 +120,6 @@ def grafico_fontes_maximo(escolha_city, escolha_year):
 
     if not busca:
         print("\n[!] NO DATA FOUND FOR THIS CITY AND YEAR.")
-        time.sleep(2)
         return
 
     # Preparação das listas para o gráfico
@@ -175,7 +171,6 @@ def grafico_fontes_minimo(escolha_city, escolha_year):
 
     if not busca:
         print("\n[!] NO DATA FOUND FOR THIS SELECTION.")
-        time.sleep(2)
         return
 
     # Preparação das listas
@@ -230,7 +225,6 @@ def initial_choice2():
             #Saída
             if order == 5:
                 print('Back to menu...')
-                time.sleep(1)
                 break
             
             #Escolher info City (Maximum consumption x year):
@@ -272,7 +266,6 @@ def initial_choice2():
                     continue
                 
                 pesquisa_cidade_grafico_maximos(escolha_1,escolha_2)
-                time.sleep(2)
                 
             elif order == 2:
                 #Escolha cidade
@@ -311,7 +304,6 @@ def initial_choice2():
                     continue
                 
                 pesquisa_cidade_grafico_minimos(escolha_1,escolha_2)
-                time.sleep(2)
                 
             elif order == 3:
                 #Escolha cidade
@@ -348,7 +340,6 @@ def initial_choice2():
                 
                 #Função puxada
                 grafico_fontes_maximo(escolha_city,escolha_year)
-                time.sleep(2)
         
         
             elif order == 4:
@@ -386,10 +377,8 @@ def initial_choice2():
                 
                 #Função puxada
                 grafico_fontes_minimo(escolha_city,escolha_year)
-                time.sleep(2)
                 
                 #Tratamento de erros:
         except ValueError:
             print('Coloque um número válido!')
-            time.sleep(1)
             continue

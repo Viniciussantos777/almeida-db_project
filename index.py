@@ -1,4 +1,3 @@
-import time
 import choices
 
 # Hud de escolhas
@@ -20,21 +19,17 @@ while True:
         # Saída do programa
         if order == 3:
             print('Youre loggin off from Almeida_DB!')
-            time.sleep(1)
             break
         
         # Escolha nº 1
         elif order == 1:
-            time.sleep(1)
             choices.initial_choice1()
             
         # Escolha nº 2
         elif order == 2:
-            time.sleep(1)
             choices.initial_choice2()
             
     
     except ValueError:
         print('Coloque um número válido!')
-        time.sleep(1)
         continue
