@@ -27,26 +27,16 @@ This project was built as a **hands-on learning experience** to consolidate know
 
 ---
 
-##  Project Structure
+## Project Structure
 
-```
-almeida-db_project/
-│
-├── index.py                 # Main application entry point (CLI menu)
-├── choices/
-│   ├── choice1.py           # Text-based queries and reports
-│   ├── choice2.py           # Graphical analysis and charts
-│
-├── base_dados_csv/           # Original CSV datasets
-├── docs/                     # Additional documentation
-└── README.md
-```
-
-## Target Structure
+---
 (MVC - lite)
+
 ```
 project/
 │
+├── index.py             # ENTRY POINT
+|
 ├── data/                # DATA ACCESS
 │   ├── __init__.py
 │   ├── db.py            # CONNECTION
@@ -57,10 +47,9 @@ project/
 │   └── energy_service.py
 │
 ├── ui/                  # INTERFACE
-│   ├── __init__.py
-│   └── choice1.py
-│
-└── main.py
+    ├── __init__.py
+    └── choice1.py
+    └── choice2.py
 ```
 
 ---
