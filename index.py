@@ -1,15 +1,15 @@
 import choices
 
 while True:
-    print('-=-'*20)
+    print('\n'+'='*30)
     print('''
-    Welcome to Almeida_DB System!
-    Choose your necessity:
-    [1] Cities' consumption by energy type
-    [2] Charts comparing cities
-    [3] EXIT'''
+Welcome to Almeida_DB System!
+Choose your necessity:
+[1] Cities' consumption by energy type
+[2] Charts comparing cities
+[3] EXIT'''
     )
-    print('-=-'*20)
+    print('='*30)
     
     try:
         

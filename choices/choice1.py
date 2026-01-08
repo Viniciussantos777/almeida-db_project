@@ -23,11 +23,12 @@ def mostrar_tabela(dados):
 
 def initial_choice1():
     while True:
-        print('=' * 20)
+        print('='*20)
         print('Choose the type of search:')
         print('[1] Per City (All years)')
         print('[2] Per City (Only one year)')
         print('[3] Exit')
+        print('='*20)
 
         try:
             order = int(input('Put here your choice: '))
