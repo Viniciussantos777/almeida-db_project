@@ -1,4 +1,3 @@
-import sqlite3
 import time
 from choices.connect_db import connect
 conexao, cursor = connect()

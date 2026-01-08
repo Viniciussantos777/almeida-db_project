@@ -1,4 +1,3 @@
-import sqlite3
 import time
 import matplotlib.pyplot as plt
 from choices.connect_db import connect
