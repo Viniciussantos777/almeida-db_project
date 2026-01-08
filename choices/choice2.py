@@ -1,7 +1,6 @@
 import sqlite3
 import time
 import matplotlib.pyplot as plt
-import random
 
 
 

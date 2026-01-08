@@ -9,11 +9,7 @@ while True:
     Choose your necessity:
     [1] Cities' consumption by energy type
     [2] Charts comparing cities
-    [3] -
-    [4] -
-    [5] -
-    [6] -
-    [7] EXIT'''
+    [3] EXIT'''
     )
     print('-=-'*20)
     
@@ -21,8 +17,8 @@ while True:
         
         order=int(input('Put here your choice: '))
         
-
-        if order == 7:
+        # Saída do programa
+        if order == 3:
             print('Youre loggin off from Almeida_DB!')
             time.sleep(1)
             break
@@ -32,7 +28,7 @@ while True:
             time.sleep(1)
             choices.initial_choice1()
             
-            
+        # Escolha nº 2
         elif order == 2:
             time.sleep(1)
             choices.initial_choice2()
