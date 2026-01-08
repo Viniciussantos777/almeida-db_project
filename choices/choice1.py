@@ -1,166 +1,67 @@
-from choices.connect_db import connect
-conexao, cursor = connect()
+from services.energy_services import (
+    listar_cidades,
+    listar_fontes_energia,
+    listar_anos,
+    consumo_por_cidade_all_years,
+    consumo_por_cidade_one_year
+)
 
-# Pesquisa todos os anos que tenham a cidade e a fonte energética escolhida:
-def pesquisa_cidade_all_years(escolha_1,escolha_2):
-    
-    query = '''
-    SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
-    FROM info
-    INNER JOIN year ON info.pk_id_year = year.pk_id_year
-    INNER JOIN energy_font ON info.pk_id_en_fo = energy_font.pk_id_en_fo
-    INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
-    INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
-    WHERE info.id_city = ? AND info.pk_id_en_fo = ?
-    ORDER BY year.year_name ASC
-'''
-    busca = cursor.execute(query, (escolha_1,escolha_2)).fetchall()
-    
-    print('-'* 75)
-    print(f"\n{'YEAR':<10} | {'CONSUM(MWh)':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
-    print("-" * 75)
 
-    for ano, consumo, fonte, industria, clima in busca:
-        print(f"{int(ano):<10} | {int(consumo):<10} | {str(fonte):<15} | {str(industria):<20} | {str(clima):<15}")
-        
-    if not busca:
+def mostrar_tabela(dados):
+    print('-' * 75)
+    print(f"{'YEAR':<10} | {'CONSUM(MWh)':<12} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
+    print('-' * 75)
+
+    for ano, consumo, fonte, industria, clima in dados:
+        print(f"{ano:<10} | {consumo:<12} | {fonte:<15} | {industria:<20} | {clima:<15}")
+
+    if not dados:
         print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
-    input("\nTAP 'enter' to continue:")
-    
-    
-    
 
-
-
-
-def pesquisa_cidade_one_year(escolha_city,escolha_year):
-
-    query = '''
-    SELECT year.year_name, info.info_consum, energy_font.name_energy, industry.name_indus, clime.name_clime
-    FROM info
-    INNER JOIN year ON info.pk_id_year = year.pk_id_year
-    INNER JOIN energy_font ON info.pk_id_en_fo = energy_font.pk_id_en_fo
-    INNER JOIN industry ON info.pk_id_indus = industry.pk_id_indus
-    INNER JOIN clime ON info.pk_id_clime = clime.pk_id_clime
-    WHERE info.id_city = ? AND info.pk_id_year = ?
-    ORDER BY info.info_consum ASC
-'''
-    busca = cursor.execute(query, (escolha_city,escolha_year)).fetchall()
-    
-    print('-'* 75)
-    print(f"\n{'YEAR':<10} | {'CONSUM (MWh)':<10} | {'EN.FONT':<15} | {'INDUSTRY':<20} | {'CLIME':<15}")
-    print("-" * 75)
-
-    for ano, consumo, fonte, industria, clima in busca:
-        print(f"{int(ano):<10} | {int(consumo):<10} | {str(fonte):<15} | {str(industria):<20} | {str(clima):<15}")
-        
-    if not busca:
-        print("NONE REGISTER FOUND WITH THIS PRESCRIPTIONS!")
     input("\nTAP 'enter' to continue:")
 
 
-
-
-#Primeira visão dessa escolha:
 def initial_choice1():
-    
-    #Opções de escolha:
     while True:
-        print('='*20)
+        print('=' * 20)
         print('Choose the type of search:')
         print('[1] Per City (All years)')
         print('[2] Per City (Only one year)')
         print('[3] Exit')
-        try:
-            order=int(input('Put here your choice: '))
-            
-            #Saída
-            if order == 3:
-                print('Back to menu...')
-                break
-            
-            #Escolher info por 1 cidade para todos os anos:
-            elif order == 1:
-                
-                #Escolha cidade
-                cursor.execute('''SELECT id_city, city_name FROM nome_city''')
-                dados_cidade = cursor.fetchall()
-                
-                opcoes_cidade = {id_city: city_name for id_city, city_name in dados_cidade}
-                
-                print('='*20)
-                print('Escolha uma das seguintes cidades:')
-                for id_city, nome in opcoes_cidade.items():
-                    print(f"{id_city} - {nome}")
-    
 
-                #Escolha_1 é a escolha da 1º opção que só precisa da cidade e fonte de energia
-                escolha_1 = int(input('Escolha um dos números: '))
-                if escolha_1 not in opcoes_cidade:
-                    print("Cidade inválida!")
-                    continue
-                
-                # Escolha de fonte de energia
-                cursor.execute('''SELECT pk_id_en_fo, name_energy FROM energy_font''')
-                dados_energia = cursor.fetchall()
-                
-                opcoes_energia = {pk_id_en_fo: name_energy for pk_id_en_fo, name_energy in dados_energia}
-                
-                print('='*20)
-                print('Escolha uma das seguintes fontes de energia: ')
-                for pk_id_en_fo, nome in opcoes_energia.items():
-                    print(f"{pk_id_en_fo} - {nome}")
-                
-                #Escolha_2 é a escolha da 1º opção que só precisa da cidade e fonte de energia
-                escolha_2 = int(input('Escolha um dos números: '))
-                if escolha_2 not in opcoes_energia:
-                    print("Cidade inválida!")
-                    continue
-                
-                pesquisa_cidade_all_years(escolha_1,escolha_2)
-                
-                
-                
-                
-                
-            #Escolher info por 1 cidade para 1 ano específico:    
+        try:
+            order = int(input('Put here your choice: '))
+
+            if order == 3:
+                break
+
+            elif order == 1:
+                cidades = listar_cidades()
+                for cid, nome in cidades:
+                    print(f"{cid} - {nome}")
+                city_id = int(input('Choose city: '))
+
+                fontes = listar_fontes_energia()
+                for fid, nome in fontes:
+                    print(f"{fid} - {nome}")
+                energy_id = int(input('Choose energy source: '))
+
+                dados = consumo_por_cidade_all_years(city_id, energy_id)
+                mostrar_tabela(dados)
+
             elif order == 2:
-                
-                #Escolha cidade
-                cursor.execute('''SELECT id_city, city_name FROM nome_city''')
-                dados = cursor.fetchall()
-                
-                opcoes = {id_city: city_name for id_city, city_name in dados}
-                
-                print('='*20)
-                print('Escolha uma das seguintes cidades:')
-                for id_city, nome in opcoes.items():
-                    print(f"{id_city} - {nome}")
-    
-                escolha_city = int(input('Escolha uma das cidades(Numeros): '))
-                
-                #Escolha o ano
-                cursor.execute('''SELECT pk_id_year, year_name FROM year''')
-                dados = cursor.fetchall()
-                
-                opcoes_year = {pk_id_year: year_name for pk_id_year, year_name in dados}
-                
-                print('='*20)
-                print('Escolha um dos seguintes anos:')
-                for pk_id_year, year_name in opcoes_year.items():
-                    print(f"{pk_id_year} - {year_name}")
-    
-                escolha_year = int(input('Escolha um dos anos(Numeros): '))
-                
-                #Função puxada
-                pesquisa_cidade_one_year(escolha_city,escolha_year)
-        
-        
-        #Tratamento de erros:
+                cidades = listar_cidades()
+                for cid, nome in cidades:
+                    print(f"{cid} - {nome}")
+                city_id = int(input('Choose city: '))
+
+                anos = listar_anos()
+                for aid, ano in anos:
+                    print(f"{aid} - {ano}")
+                year_id = int(input('Choose year: '))
+
+                dados = consumo_por_cidade_one_year(city_id, year_id)
+                mostrar_tabela(dados)
+
         except ValueError:
             print('Coloque um número válido!')
-            continue
-
-
-
-
