@@ -42,6 +42,27 @@ almeida-db_project/
 └── README.md
 ```
 
+## Target Structure
+(MVC - lite)
+```
+project/
+│
+├── data/                # DATA ACCESS
+│   ├── __init__.py
+│   ├── db.py            # CONNECTION
+│   └── repositories.py  # SQL ONLY
+│
+├── services/            # BUSINESS RULES
+│   ├── __init__.py
+│   └── energy_service.py
+│
+├── ui/                  # INTERFACE
+│   ├── __init__.py
+│   └── choice1.py
+│
+└── main.py
+```
+
 ---
 
 ##  Features
@@ -114,7 +135,7 @@ Through this project, I was able to:
 
 ##  Future Improvements
 
-* Separate database access into a dedicated data layer
+* Separate database access into a dedicated data layer✅
 * Add automated tests
 * Improve documentation with ER diagrams and data dictionaries
 * Replace CLI with a GUI or web-based dashboard
