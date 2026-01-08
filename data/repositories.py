@@ -49,3 +49,49 @@ def get_consumption_by_city_one_year(conn, city_id, year_id):
     ORDER BY info.info_consum ASC
     """
     return conn.execute(query, (city_id, year_id)).fetchall()
+
+def get_max_consumption_by_year(conn, city_id, energy_id):
+    query = '''
+        SELECT y.year_name, MAX(i.info_consum), ef.name_energy
+        FROM info AS i
+        INNER JOIN year AS y ON i.pk_id_year = y.pk_id_year
+        INNER JOIN energy_font AS ef ON i.pk_id_en_fo = ef.pk_id_en_fo
+        WHERE i.id_city = ? AND i.pk_id_en_fo = ?
+        GROUP BY y.year_name
+        ORDER BY y.year_name ASC
+    '''
+    return conn.execute(query, (city_id, energy_id)).fetchall()
+
+def get_min_consumption_by_year(conn, city_id, energy_id):
+    query = '''
+        SELECT y.year_name, MIN(i.info_consum), ef.name_energy
+        FROM info AS i
+        INNER JOIN year AS y ON i.pk_id_year = y.pk_id_year
+        INNER JOIN energy_font AS ef ON i.pk_id_en_fo = ef.pk_id_en_fo
+        WHERE i.id_city = ? AND i.pk_id_en_fo = ?
+        GROUP BY y.year_name
+        ORDER BY y.year_name ASC
+    '''
+    return conn.execute(query, (city_id, energy_id)).fetchall()
+
+def get_max_consumption_by_source(conn, city_id, year_id):
+    query = '''
+        SELECT ef.name_energy, MAX(i.info_consum)
+        FROM info AS i
+        INNER JOIN energy_font AS ef ON i.pk_id_en_fo = ef.pk_id_en_fo
+        WHERE i.id_city = ? AND i.pk_id_year = ?
+        GROUP BY ef.name_energy
+        ORDER BY MAX(i.info_consum) DESC
+    '''
+    return conn.execute(query, (city_id, year_id)).fetchall()
+
+def get_min_consumption_by_source(conn, city_id, year_id):
+    query = '''
+        SELECT ef.name_energy, MIN(i.info_consum)
+        FROM info AS i
+        INNER JOIN energy_font AS ef ON i.pk_id_en_fo = ef.pk_id_en_fo
+        WHERE i.id_city = ? AND i.pk_id_year = ?
+        GROUP BY ef.name_energy
+        ORDER BY MIN(i.info_consum) ASC
+    '''
+    return conn.execute(query, (city_id, year_id)).fetchall()

@@ -41,3 +41,36 @@ def consumo_por_cidade_one_year(city_id, year_id):
     dados = get_consumption_by_city_one_year(conn, city_id, year_id)
     conn.close()
     return dados
+
+# Adicione as novas funções do repository no import lá no topo:
+from data.repositories import (
+    # ... as que já existiam,
+    get_max_consumption_by_year,
+    get_min_consumption_by_year,
+    get_max_consumption_by_source,
+    get_min_consumption_by_source
+)
+
+def listar_consumo_max_por_ano(city_id, energy_id):
+    conn, _ = connect_db()
+    dados = get_max_consumption_by_year(conn, city_id, energy_id)
+    conn.close()
+    return dados
+
+def listar_consumo_min_por_ano(city_id, energy_id):
+    conn, _ = connect_db()
+    dados = get_min_consumption_by_year(conn, city_id, energy_id)
+    conn.close()
+    return dados
+
+def listar_consumo_max_por_fonte(city_id, year_id):
+    conn, _ = connect_db()
+    dados = get_max_consumption_by_source(conn, city_id, year_id)
+    conn.close()
+    return dados
+
+def listar_consumo_min_por_fonte(city_id, year_id):
+    conn, _ = connect_db()
+    dados = get_min_consumption_by_source(conn, city_id, year_id)
+    conn.close()
+    return dados

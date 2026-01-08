@@ -26,7 +26,7 @@ while True:
             
         # Escolha nº 2
         elif order == 2:
-            #choices.initial_choice2()
+            choices.initial_choice2()
             pass
     
     except ValueError:
